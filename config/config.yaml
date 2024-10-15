@@ -1,0 +1,6 @@
+server:
+  port: 4000
+postgres:
+  database: urls
+  user:     postgres
+  password: admin
