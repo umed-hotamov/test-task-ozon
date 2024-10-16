@@ -30,7 +30,7 @@ func GetConfig() *Config {
   
   cfg, err := ParseConfig(v)
   if err != nil {
-    log.Fatalf("Error parsing config")
+    log.Fatalf("Error parsing config %v", err)
   }
 
   return cfg
