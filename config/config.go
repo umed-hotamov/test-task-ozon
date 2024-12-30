@@ -39,11 +39,11 @@ func GetConfig() *Config {
 func LoadConfig() (*viper.Viper, error) {
   v := viper.New()
   
+  v.SetConfigType("yml")
   v.SetConfigName("config")
-  v.SetConfigType("yaml")
-  v.AddConfigPath(".")
+  v.AddConfigPath("./config/")
 
-  err := viper.ReadInConfig()
+  err := v.ReadInConfig()
   if err != nil {
     log.Printf("Unable to read config: %v", err)
     

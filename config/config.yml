@@ -2,5 +2,5 @@ server:
   port: 4000
 postgres:
   database: short_urls
-  user:     admin
+  user:     umed
   password: admin
