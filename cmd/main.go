@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 
-	"github.com/umed-hotamov/url-shortener/api"
 	"github.com/umed-hotamov/url-shortener/config"
 	"github.com/umed-hotamov/url-shortener/pkg/database"
 	"github.com/umed-hotamov/url-shortener/pkg/logger"
@@ -22,7 +21,5 @@ func main() {
   }
   defer db.Close()
 
-  log.Print("db connected")
 
-  api.Run(cfg, db)
 }

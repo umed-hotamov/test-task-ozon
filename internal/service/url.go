@@ -11,8 +11,4 @@ type Url struct {
 }
 
 func (s *Service) AddUrl(url *Url) {
-  const query = `INSERT INTO urls (origin_url)
-                 VALUES ($1)`
-
-
 } 
