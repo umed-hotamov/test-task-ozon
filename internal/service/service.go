@@ -5,11 +5,11 @@ import (
 )
 
 type Service struct {
-  DB *sql.DB
+	DB *sql.DB
 }
 
 func NewService(db *sql.DB) *Service {
-  return &Service{
-    DB: db,
-  }
+	return &Service{
+		DB: db,
+	}
 }

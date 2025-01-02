@@ -1,14 +1,12 @@
 package service
 
-import (
-
-)
+import ()
 
 type Url struct {
-  ID        int    `json:"id,omitempty"`
-  OriginUrl string `json:"origin_url"`
-  ShortUrl  string `json:"short_url,omitempty"`
+	ID        int    `json:"id,omitempty"`
+	OriginUrl string `json:"origin_url"`
+	ShortUrl  string `json:"short_url,omitempty"`
 }
 
 func (s *Service) AddUrl(url *Url) {
-} 
+}
