@@ -5,11 +5,11 @@ import (
 	"fmt"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
-	"github.com/umed-hotamov/url-shortener/config"
+	"github.com/umed-hotamov/url-shortener/internal/config"
 	"go.uber.org/zap"
 )
 
-func InitDb(cfg *config.Config, logger *zap.Logger) (*sql.DB, error) {
+func InitDB(cfg *config.Config, logger *zap.Logger) (*sql.DB, error) {
 	dsn := fmt.Sprintf("user=%s password=%s dbname=%s",
 		cfg.Postgres.User,
 		cfg.Postgres.Password,
