@@ -1,20 +1,23 @@
 package inmemory
 
 import (
-  "sync"
-  "time"
+	"errors"
+	"sync"
+	"time"
+
+	"github.com/umed-hotamov/url-shortener/internal/domain"
 )
 
-var id ID
+var id domain.ID = 1
 
 type URLCache struct {
-  items map[ID]URL
+  items map[domain.ID]domain.URL
   mu    sync.Mutex
 }
 
 func NewURLCache() *URLCache {
   c := &URLCache{
-    items: make(map[ID]URL),
+    items: make(map[domain.ID]domain.URL),
   }
 
   go func() {
@@ -28,19 +31,32 @@ func NewURLCache() *URLCache {
   return c
 }
 
-func (uc *URLCache) Create(url string) {
+func (uc *URLCache) Set(url domain.URL) domain.ID {
   uc.mu.Lock()
   defer uc.mu.Unlock()
   
-  uc.items[id] = StringToURL(url)
+  uc.items[id] = url
+  
+  lastID := id
   id.Inc()
+
+  return lastID 
 }
 
-func (uc *URLCache) Read(id int) (URL, bool) {
+func (uc *URLCache) Get(id domain.ID) (domain.URL, error) {
   uc.mu.Lock()
   defer uc.mu.Unlock()
 
-  url, found := uc.items[INToID(id)]
+  url, found := uc.items[id]
 
-  return url, found
+  var err error
+  if found == false {
+    err = errors.New("url does not exist")
+  } 
+
+  return url, err
+}
+
+func (uc *URLCache) LastID() domain.ID {
+  return id - 1
 }
