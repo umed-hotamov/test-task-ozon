@@ -1,12 +1,24 @@
 package service
 
-import ()
+import (
+  us "github.com/umed-hotamov/url-shortener/internal/urlshortener"
+  "github.com/umed-hotamov/url-shortener/internal/domain"
+)
 
-type Url struct {
-	ID        int    `json:"id,omitempty"`
-	OriginUrl string `json:"origin_url"`
-	ShortUrl  string `json:"short_url,omitempty"`
+func (s *Service) GetShortened(url domain.URL) domain.URL {
+  s.DB.Set(url)
+
+  shortenedURL := us.Encode(s.DB.LastID().ToInt())
+  return domain.URL(shortenedURL)
 }
 
-func (s *Service) AddUrl(url *Url) {
+func (s *Service) GetOrigin(shortenedURL domain.URL) (domain.URL, error) {
+  originID := us.Decode(shortenedURL.ToString())
+
+  originURL, err := s.DB.Get(domain.ID(originID))
+  if err != nil {
+    return "", err
+  }
+
+  return originURL, nil
 }
