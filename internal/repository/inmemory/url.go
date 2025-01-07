@@ -24,7 +24,7 @@ func NewURLCache() *URLCache {
     for range time.Tick(5 * time.Hour) {
       c.mu.Lock()
       clear(c.items)
-      id.Reset()
+      id = 0
       c.mu.Unlock()
     }
   }()
@@ -32,16 +32,12 @@ func NewURLCache() *URLCache {
   return c
 }
 
-func (uc *URLCache) Set(url domain.URL) domain.ID {
+func (uc *URLCache) Set(url domain.URL) {
   uc.mu.Lock()
   defer uc.mu.Unlock()
   
   uc.items[id] = url
-  
-  lastID := id
-  id.Inc()
-
-  return lastID 
+  id += 1
 }
 
 func (uc *URLCache) Get(id domain.ID) (domain.URL, error) {

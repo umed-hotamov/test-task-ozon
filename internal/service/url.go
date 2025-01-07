@@ -1,8 +1,8 @@
 package service
 
 import (
-  us "github.com/umed-hotamov/url-shortener/internal/urlshortener"
-  "github.com/umed-hotamov/url-shortener/internal/domain"
+	"github.com/umed-hotamov/url-shortener/internal/domain"
+	us "github.com/umed-hotamov/url-shortener/internal/urlshortener"
 )
 
 func (s *Service) GetShortened(url domain.URL) domain.URL {

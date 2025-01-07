@@ -1,6 +1,7 @@
-package main
+package api
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -23,9 +24,11 @@ func NewHandler(logger *zap.Logger, service *service.Service) *Handler {
 }
 
 func (h *Handler) ShortenURLHandler(c *gin.Context) {
-  url := c.Query("url")
+  url := c.Param("url")
   if url == "" {
     c.JSON(http.StatusNotFound, gin.H{"Error": "url is empty"})
+    h.logger.Error("error: empty url", zap.Error(errors.New("Empty url")))
+    return
   }
 
   shortenedURL := h.service.GetShortened(domain.URL(url))
@@ -33,14 +36,17 @@ func (h *Handler) ShortenURLHandler(c *gin.Context) {
 }
 
 func (h *Handler) OriginURLHandler(c *gin.Context) {
-  url := c.Query("url")
+  url := c.Param("url")
   if url == "" {
     c.JSON(http.StatusNotFound, gin.H{"Error": "url is empty"})
+    h.logger.Error("error: empty url", zap.Error(errors.New("Empty url")))
+    return
   }
 
   originURL, err := h.service.GetOrigin(domain.URL(url))
   if err != nil {
     c.JSON(http.StatusNotFound, gin.H{"Error": err.Error()})
+    h.logger.Error("error: origin url not found", zap.Error(errors.New("Url not found")))
   }
 
   c.JSON(http.StatusOK, gin.H{"Origin url": fmt.Sprintf("%s", originURL)})

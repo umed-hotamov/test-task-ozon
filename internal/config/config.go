@@ -13,6 +13,7 @@ type Config struct {
 
 type ServerConfig struct {
 	Port string
+  Host string
 }
 
 func GetConfig() *Config {

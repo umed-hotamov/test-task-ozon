@@ -1,2 +1,3 @@
 server:
-  port: 4000
+  host: localhost
+  port: 1234
