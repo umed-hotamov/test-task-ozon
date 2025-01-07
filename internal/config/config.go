@@ -8,18 +8,11 @@ import (
 )
 
 type Config struct {
-	Postgres PostgresConfig
 	Server   ServerConfig
 }
 
-type PostgresConfig struct {
-	Database string
-	User     string
-	Password string
-}
-
 type ServerConfig struct {
-	port string
+	Port string
 }
 
 func GetConfig() *Config {

@@ -1,7 +1,7 @@
-package domain 
+package domain
 
 type ID  int
-type URL string
+type URL string 
 
 func (id ID) Inc() {
   id += 1

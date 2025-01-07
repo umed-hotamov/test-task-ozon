@@ -5,7 +5,7 @@ import (
 )
 
 type URLRepository interface {
-  Set(url domain.URL)
+  Set(url domain.URL) domain.ID
   Get(id domain.ID) (domain.URL, error)
   LastID() domain.ID
 }

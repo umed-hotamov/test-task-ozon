@@ -23,6 +23,7 @@ func NewURLCache() *URLCache {
   go func() {
     for range time.Tick(5 * time.Hour) {
       c.mu.Lock()
+      clear(c.items)
       id.Reset()
       c.mu.Unlock()
     }
