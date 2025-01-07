@@ -1,15 +1,15 @@
 package service
 
 import (
-	"database/sql"
+  repo "github.com/umed-hotamov/url-shortener/internal/repository"
 )
 
 type Service struct {
-  DB *sql.DB
+	DB repo.URLRepository
 }
 
-func NewService(db *sql.DB) *Service {
-  return &Service{
-    DB: db,
-  }
+func NewService(db repo.URLRepository) *Service {
+	return &Service{
+		DB: db,
+	}
 }

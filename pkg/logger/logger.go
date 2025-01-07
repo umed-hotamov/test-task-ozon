@@ -43,10 +43,10 @@ func createLogDir(path string) error {
 }
 
 func NewLogger(level string) (*zap.Logger, error) {
-  setLevel, exists := levelMapping[level]
-  if !exists {
-    log.Fatalf("Invalid log level")
-  }
+	setLevel, exists := levelMapping[level]
+	if !exists {
+		log.Fatalf("Invalid log level")
+	}
 
 	encoderConfig := zap.NewProductionEncoderConfig()
 	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
