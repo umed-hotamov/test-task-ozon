@@ -23,27 +23,43 @@ func NewHandler(logger *zap.Logger, service *service.Service) *Handler {
   }
 }
 
+type Request struct {
+  URL string `json:"url"`
+}
+
 func (h *Handler) ShortenURLHandler(c *gin.Context) {
-  url := c.Param("url")
-  if url == "" {
+  var req Request
+  
+  if err := c.ShouldBindJSON(&req); err != nil {
+    c.JSON(http.StatusBadRequest, gin.H{"Error": err.Error()})
+    h.logger.Error("error: bad request", zap.Error(err))
+  }
+  
+  if req.URL == "" {
     c.JSON(http.StatusNotFound, gin.H{"Error": "url is empty"})
     h.logger.Error("error: empty url", zap.Error(errors.New("Empty url")))
     return
   }
 
-  shortenedURL := h.service.GetShortened(domain.URL(url))
+  shortenedURL := h.service.GetShortened(domain.URL(req.URL))
   c.JSON(http.StatusOK, gin.H{"Shortened url": fmt.Sprintf("%s", shortenedURL)})
 }
 
 func (h *Handler) OriginURLHandler(c *gin.Context) {
-  url := c.Param("url")
-  if url == "" {
+  var req Request
+  
+  if err := c.ShouldBindJSON(&req); err != nil {
+    c.JSON(http.StatusBadRequest, gin.H{"Error": err.Error()})
+    h.logger.Error("error: bad request", zap.Error(err))
+  }
+
+  if req.URL == "" {
     c.JSON(http.StatusNotFound, gin.H{"Error": "url is empty"})
     h.logger.Error("error: empty url", zap.Error(errors.New("Empty url")))
     return
   }
 
-  originURL, err := h.service.GetOrigin(domain.URL(url))
+  originURL, err := h.service.GetOrigin(domain.URL(req.URL))
   if err != nil {
     c.JSON(http.StatusNotFound, gin.H{"Error": err.Error()})
     h.logger.Error("error: origin url not found", zap.Error(errors.New("Url not found")))

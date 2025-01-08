@@ -32,8 +32,8 @@ func run(cfg *config.Config, logger *zap.Logger, db repository.URLRepository) {
   service := service.NewService(db) 
   handler := handler.NewHandler(logger, service)
 
-  r.POST("shorten/:url", handler.ShortenURLHandler)
-  r.GET("origin/:url", handler.OriginURLHandler)
+  r.POST("/shorten", handler.ShortenURLHandler)
+  r.GET("/origin", handler.OriginURLHandler)
 
   r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
 }
